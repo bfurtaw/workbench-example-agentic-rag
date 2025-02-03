@@ -141,7 +141,7 @@ def grade_documents(state):
 
     print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
     question = state["question"]
-    documents = state["documents"]
+    documents = state["documents"] if "documents" in state else None
 
     # Score each doc
     filtered_docs = []
@@ -187,7 +187,7 @@ def web_search(state):
 
     print("---WEB SEARCH---")
     question = state["question"]
-    documents = state["documents"]
+    documents = state["documents"] if "documents" in state else None
 
     # Web search
     web_search_tool = TavilySearchResults(k=3)
