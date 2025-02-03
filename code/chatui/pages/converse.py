@@ -95,7 +95,7 @@ def build_page(client: chat_client.ChatClient) -> gr.Blocks:
     
     model_list = ["meta/llama3-70b-instruct",
                   "mistralai/mixtral-8x22b-instruct-v0.1"]
-
+    os.environ["USER_AGENT"] = "Chat"
     with gr.Blocks(title=TITLE, theme=kui_theme, css=kui_styles + _LOCAL_CSS) as page:
         gr.Markdown(f"# {TITLE}")
 
@@ -124,7 +124,7 @@ def build_page(client: chat_client.ChatClient) -> gr.Blocks:
                 # Main chatbot panel. 
                 with gr.Row(equal_height=True):
                     with gr.Column(min_width=350):
-                        chatbot = gr.Chatbot(show_label=False)
+                        chatbot = gr.Chatbot( show_label=False)
 
                 # Message box for user input
                 with gr.Row(equal_height=True):
@@ -383,7 +383,9 @@ def build_page(client: chat_client.ChatClient) -> gr.Blocks:
                     with gr.TabItem("Hide All Settings", id=3) as hide_all_settings:
                         gr.Markdown("")
 
-        page.load(logger.read_logs, None, logs, every=1)
+        #replace Gradio 4. every=1 code with Gradio 5. reccomemned gr.Timer : page.load(logger.read_logs, None, logs, every=1)
+        timer = gr.Timer(value=1)
+        timer.tick(logger.read_logs, None, logs)
 
         """ These helper functions hide the expanded component model settings when the Hide tab is clicked. """
         
